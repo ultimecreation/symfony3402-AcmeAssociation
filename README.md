@@ -38,4 +38,5 @@ Fonctionnalités:
 
 11/ j'ai mis en place un système de souscription à la newsletter
 
+12/ j'ai mis en place les mention légales
 
