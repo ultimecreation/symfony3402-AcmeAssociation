@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+
+    <title>{% block title %}Acme Association{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{asset('css/fontawesome-all.css')}} ">
+
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}} ">
+
+    <link rel="stylesheet" href="{{ asset('bundles/public/css/comment.css') }}" />
+    
+    <link rel="stylesheet" href="{{asset('css/style.css')}} ">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    
+  </head>
+  <body>
+
+    <header>
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top bg-light">
+            <a class="navbar-brand" href="{{path('homepage')}}">
+                
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('homepage')}}"><strong>ACCUEIL</strong></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><strong>COMITÉ</strong></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{path('app_comite_historique')}}">Historique</a>
+                        <a class="dropdown-item" href="{{path('app_comite_equipe')}}">Équipe</a>
+                        <a class="dropdown-item" href="{{path('app_comite_nousrencontrer')}}">Nous rencontrer</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><strong>ACTUALITÉS</strong></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{path('app_actualites_evenements')}}">Évenements réçents</a>
+                        <a class="dropdown-item" href="{{path('app_actualites_bilans')}}">Bilans</a>
+                        
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_missions_missions')}}"><strong>MISSIONS</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_actions_actions')}}"><strong>ACTIONS</strong></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><strong>JE M'ENGAGE</strong></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{path('app_jemengage_dons')}}">Faire un Don</a>
+                        <a class="dropdown-item" href="{{path('app_jemengage_partenaires')}}">Devenir Partenaire</a>
+                        <a class="dropdown-item" href="{{path('app_jemengage_benevoles')}}">Devenir Bénévole</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('app_contact_contact')}} "><strong>CONTACT</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href=""><strong></strong></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"><strong>NEWSLETTER</strong></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="https://ultimecreation.us18.list-manage.com/subscribe?u=b81a524d3faad2ad071022741&id=f38aebd2ee&orig-lang=1">Inscription</a>
+                        <a class="dropdown-item" href="https://ultimecreation.us18.list-manage.com/unsubscribe?u=b81a524d3faad2ad071022741&id=f38aebd2ee&orig-lang=1">Désinscription</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
+                        <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}" >
+                                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                        </a>
+                           {% if is_granted('ROLE_ADMIN') %}
+                                 <a class="dropdown-item" href="{{path('admin')}}">Administration</a>
+                           {% endif %}
+                            
+                        </div>
+                    </li>
+
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('fos_user_registration_register') }}" class="nav-link"><strong>{{ 'layout.register'|trans({}, 'FOSUserBundle')|upper() }} </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('fos_user_security_login') }}" class="nav-link"><strong> {{ 'layout.login'|trans({}, 'FOSUserBundle')|upper() }}</strong></a>
+                    </li>
+                   
+                {% endif %}
+            </ul>
+            </div>
+        </nav>
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 mx-auto">
+                    <div id="demo" class="carousel slide " data-ride="carousel">
+                    <ul class="carousel-indicators">
+                        <li data-target="#demo" data-slide-to="0" class="active"></li>
+                        <li data-target="#demo" data-slide-to="1"></li>
+                        <li data-target="#demo" data-slide-to="2"></li>
+                    </ul>
+                    <div class="carousel-inner ">
+                        <div class="carousel-item active">
+                            <img src="{{asset('img/chercheuse.png')}}" alt="chercheuse" class="img-fluid" >
+                            <div class="carousel-caption">
+                                <h2>Chercher pour Guérir</h2>
+                                <a href="{{path('app_jemengage_dons')}}" class="btn btn-primary"><strong>FAIRE UN DON</strong></a> 
+                            </div> 
+                                
+                        </div>
+                        
+                        <div class="carousel-item">
+                            <img src="{{asset('img/partenaires.jpg')}}" alt="partenaires" class="img-fluid">
+                            <div class="carousel-caption">
+                                <h2>Soutenir la Recherche</h2>
+                                <a href="{{path('app_jemengage_partenaires')}}" class="btn btn-primary"><strong>DEVENIR<br>PARTENAIRE</strong></a> 
+                            </div>   
+                        </div>
+        
+                        <div class="carousel-item">
+                            <img src="{{asset('img/GettyImages-468840595_super.jpg')}}" alt="deux femmes" class="img-fluid">
+                            <div class="carousel-caption">
+                                <h2>Aider pour Soulager</h2>
+                                <a href="{{path('app_jemengage_benevoles')}}" class="btn btn-primary"><strong>JE M'ENGAGE</strong></a> 
+                            </div>   
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--message-->
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <!--fin message-->
+          
+    </header><br>
+
+    {% block body %}
+    
+    {% endblock %}
+    
+
+      <!-- FOOTER -->
+      <footer class="container bg-light">
+        
+        <p class="text-center">&copy; {{"now"|date('Y')}} &middot;<br> <a href="{{path('app_comite_nousrencontrer')}}#horaires ">Horaires </a> &middot; <a href="{{path('mentions légales')}} ">Mentions Légales </a>&middot; <a href="{{path('plan du site')}} ">Plan du site </a>&middot; <a href="{{ aide_sociale}}/Dossier type dde.aide.cd10.pdf">Dossier aide sociale</a></p>
+      </footer>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script type="text/javascript" src="{{ asset('bundles/foscomment/Resources/public/js/comments.js') }}"></script>
+      
+    <script src="{{asset('js/jquery-3.2.1.slim.min.js')}} "></script>
+    <script src="{{asset('js/popper.min.js')}} "></script>
+    <script src="{{asset('js/bootstrap.min.js')}} "></script>
+    
+    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/b81a524d3faad2ad071022741/261562a5f90070b7043d5046b.js");</script>
+    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">require(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us18.list-manage.com","uuid":"b81a524d3faad2ad071022741","lid":"f38aebd2ee"}) })</script>
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#1150A0"
+    },
+    "button": {
+      "background": "transparent",
+      "text": "#fff",
+      "border": "#fff",
+      "background": "#f47920"
+    }
+  },
+  "position": "bottom",
+  "static": false,
+  "content": {
+    "message": "Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l’utilisation des cookies.",
+    "dismiss": "J'accepte",
+    "link": "En savoir plus",
+    "href": "{{ path('mentions légales')}}"
+  }
+})});
+</script>
+    {# <script src="{{asset('js/cookiechoices.js')}} "></script>
+    <script>document.addEventListener('DOMContentLoaded', function(event){cookieChoices.showCookieConsentBar('Ce site utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation, vous acceptez l’utilisation des cookies.', 'J’accepte', 'En savoir plus', '{{ path("mentions légales")}}');});</script> #}
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+  </body>
+</html>

@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row text-center ">
+        <div class="col-lg-7 col-md-10 mx-auto">
+            <h1 class="my-5 py-5 ">{{title}} </h1>
+            <hr>
+            {% for presidence in presidences %}
+                <div class="card my-5 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2>{{ presidence.nom}} </h2>
+                    </div>
+                    {% if presidence.image %}
+                        <img src="{{ asset('')}}{{presidence_images}}/{{presidence.image}} " alt="" class="card-img img-fluid">
+                    {% endif %}
+                    <div class="card-body">
+                        <p class="lead">{{ presidence.description|raw}} </p>
+                    </div>
+                </div>
+            {% endfor %}
+            <h1 class="my-5 py-5 ">Membres du Bureau </h1>
+            {% for bureau in bureaux %}
+                <div class="card my-5 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h2>{{ bureau.nom}} </h2>
+                    </div>
+                    {% if bureau.image %}
+                        <img src="{{ asset('')}}{{bureau_images}}/{{bureau.image}} " alt="" class="card-img img-fluid">
+                    {% endif %}
+                    <div class="card-body">
+                        <p>{{ bureau.description|raw}} </p>
+                    </div>
+                </div>
+                
+            {% endfor %}
+            <h1 class=" py-5 ">Administrateurs</h1>
+            <div class="list-group my-5 shadow">
+                <small class="text-muted mx-auto">* cliquer pour accéder à la description</small>
+                {% for administrateur in administrateurs %}
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item{{administrateur.id}}">{{administrateur.nom}}</a>
+                <div id="item{{administrateur.id}}" class="collapse text-center px-5">
+                    <div class="my-5 py-5">
+                        <strong>
+                           {% if administrateur.description %}
+                           <p>{{administrateur.description|raw}}</p>
+                           {% else %}
+                           <p>pas de données disponible</p>
+                           {% endif %}
+                        </strong>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}

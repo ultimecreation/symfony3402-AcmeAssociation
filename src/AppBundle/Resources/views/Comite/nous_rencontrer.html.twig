@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row text-center ">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1>{{title}} </h1>
+            <hr>
+            <p class="lead">Vous pouvez nous rendre visite sur place au :
+                <br><h5>100 avenue Acme</h5>
+                <h5>75000 Paris</h5>
+                et/ou prendre rendez-vous au :
+                <br><br>
+                <h5>01 02 03 04 05</h5>
+            </p>
+            <hr>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3120.424687840799!2d2.3622216522984085!3d48.87815471273003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6181e4622938ebd!2sH%C3%B4tel+At+Gare+Du+Nord!5e0!3m2!1sfr!2sfr!4v1542722833608" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            <hr>
+            <h2 id="horaires">Accueil du Public</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Matin</th>
+                        <th>Après-midi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lundi</td>
+                        <td>10 H - 12 H</td>
+                        <td>14 H - 16 H</td>
+                    </tr>
+                    <tr>
+                        <td>Mardi</td>
+                        <td>10 H - 12 H</td>
+                        <td>14 H - 16 H</td>
+                    </tr>
+                    <tr>
+                        <td>Mercredi</td>
+                        <td>10 H - 12 H</td>
+                        <td>14 H - 16 H</td>
+                    </tr>
+                    <tr>
+                        <td>Jeudi</td>
+                        <td>10 H - 12 H</td>
+                        <td>14 H - 16 H</td>
+                    </tr>
+                    <tr>
+                        <td>Vendredi</td>
+                        <td>10 H - 12 H</td>
+                        <td>14 H - 16 H</td>
+                    </tr>
+                </tbody>
+                </table>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

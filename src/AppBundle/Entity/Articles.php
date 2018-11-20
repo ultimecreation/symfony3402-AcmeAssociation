@@ -1,0 +1,536 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use AppBundle\Entity\Category;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+/**
+ * Articles
+ *
+ * @ORM\Table(name="articles")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ArticlesRepository")
+ * @ORM\Entity
+ * @Vich\Uploadable
+ * 
+ */
+class Articles
+{
+    /**
+     * 
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="article",fetch="EAGER")
+     */
+    protected $comments;
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="articles",cascade={"persist"},orphanRemoval=false)
+    * @ORM\JoinTable(name="articles_categories")
+    *
+     */
+    protected $category;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="User",inversedBy="articles",cascade={"persist"})
+     * @ORM\JoinColumn(name="userId",referencedColumnName="id")
+     */
+    protected $user;
+    
+
+    public function __construct() {
+        $this->category = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+    public function __toString() {
+        return $this->getTitre();
+      }
+    /**
+     * 
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     *
+     * @var integer
+     * @ORM\Column(name="userId", type="integer", length=11,nullable=false)
+     */
+    private $userId;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=255)
+     */
+    private $titre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description" ,nullable=true, type="text")
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string",nullable=true, length=255)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Assert\File(maxSize="8M")
+     * @Vich\UploadableField(mapping="article_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true, length=255)
+     * @var string
+     */
+    private $other;
+
+    /**
+     *  @Assert\File(maxSize="2M")
+     * @Vich\UploadableField(mapping="article_files", fileNameProperty="other")
+     * @var File
+     */
+    private $otherFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true, length=255)
+     * @var string
+     */
+    private $video;
+
+    /**
+     *  @Assert\File(maxSize="40M")
+     * @Vich\UploadableField(mapping="article_videos", fileNameProperty="video")
+     * @var File
+     */
+    private $videoFile;
+
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    public $updatedAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $une = false;
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $blog = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $bilan = false;
+   
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     *
+     * @return Article
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Article
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+
+    /**
+     * Get the value of une
+     */ 
+    public function getUne()
+    {
+        return $this->une;
+    }
+
+    /**
+     * Set the value of une
+     *
+     * @return  self
+     */ 
+    public function setUne($une)
+    {
+        $this->une = $une;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of blog
+     */ 
+    public function getBlog()
+    {
+        return $this->blog;
+    }
+
+    /**
+     * Set the value of blog
+     *
+     * @return  self
+     */ 
+    public function setBlog($blog)
+    {
+        $this->blog = $blog;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of bilan
+     */ 
+    public function getBilan()
+    {
+        return $this->bilan;
+    }
+
+    /**
+     * Set the value of bilan
+     *
+     * @return  self
+     */ 
+    public function setBilan($bilan)
+    {
+        $this->bilan = $bilan;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of other
+     *
+     * @return  string
+     */ 
+    public function getOther()
+    {
+        return $this->other;
+    }
+
+    /**
+     * Set the value of other
+     *
+     * @param  string  $other
+     *
+     * @return  self
+     */ 
+    public function setOther($other)
+    {
+        $this->other = $other;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of otherFile
+     *
+     * @return  File
+     */ 
+    public function getOtherFile()
+    {
+        return $this->otherFile;
+    }
+
+    /**
+     * Set the value of otherFile
+     *
+     * @param  File  $otherFile
+     *
+     * @return  self
+     */ 
+    public function setOtherFile(File $other = null)
+    {
+        $this->otherFile = $other;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($other) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Get the value of video
+     *
+     * @return  string
+     */ 
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    /**
+     * Set the value of video
+     *
+     * @param  string  $video
+     *
+     * @return  self
+     */ 
+    public function setVideo($video)
+    {
+        $this->video = $video;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of videoFile
+     *
+     * @return  File
+     */ 
+    public function getVideoFile()
+    {
+        return $this->videoFile;
+    }
+
+    /**
+     * Set the value of videoFile
+     *
+     * @param  File  $videoFile
+     *
+     * @return  self
+     */ 
+    public function setVideoFile(File $video = null)
+    {
+        $this->videoFile = $video;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($video) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Articles
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Articles
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category[] = $category;
+    
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category->removeElement($category);
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     *
+     * @return Articles
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
+    
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Articles
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Articles
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+}

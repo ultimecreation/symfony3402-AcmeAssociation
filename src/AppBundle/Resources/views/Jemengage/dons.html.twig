@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row  ">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1 class="text-center">{{title}} </h1>
+            <hr>
+            <div class="row justify-content-between text-center">
+                <div class="col-md-3 rounded m-3 py-3 shadow bg-warning text-white">
+                    <h1>80€</h1>
+                    <h4>soit 27€ </h4>
+                    <p>après déduction fiscale</p>
+                </div>
+                <div class="col-md-3 rounded m-3 py-3 shadow liguegris">
+                    <h1 >150€</h1>
+                    <h4>soit 51€ </h4>
+                    <p>après déduction fiscale</p>
+                </div>
+                <div class="col-md-3 rounded m-3 py-3 shadow bg-primary text-white">
+                    <h1>250€</h1>
+                    <h4>soit 85€ </h4>
+                    <p>après déduction fiscale</p>
+                </div>
+            </div>
+            <hr>
+            <h1 class="text-center">Pourquoi faire un don</h1>
+            <div class="list-group">
+                <p class="lead list-group-item list-group-item-action">
+                    <i class="fa fa-check mr-2"></i>Soutenir l'achat de matériel de pointe 
+                </p>
+                <p class="lead list-group-item list-group-item-action">
+                    <i class="fa fa-check mr-2"></i>déduction de 66% de l'impôt sur le revenu
+                </p>
+                <p class="lead list-group-item list-group-item-action">
+                    <i class="fa fa-check mr-2"></i>Soutenir la recherche 
+                </p>
+            </div><br>
+            <h1 class="text-center">Comment faire un don</h1>
+            <div class="card text-center shadow my-5 py-2">
+                <div class="card-title liguebleu">
+                    <h4>par chèque</h4>
+                </div>
+                <div class="card-body">
+                    <h5>à l’ordre de « Acme Association »</h5>
+                    <p class="lead px-3">à retourner , accompagné de votre bon de soutien ,<br> sous enveloppe affranchie à :</p>
+                    <p><strong>Monsieur le Président du Comité</strong></p>
+                    <p><strong>100 avenue Acme</strong></p>
+                    <p><strong>75000 Paris</strong></p>
+                    <div class="card-footer liguebleu">
+                        <a href="#" class="btn btn-primary "><strong>Bon de Soutien</strong></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card text-center shadow my-5 py-2">
+                <div class="card-title liguebleu">
+                    <h4>par carte bancaire</h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead px-3">Vous pouvez donner en toute sérénité , tous les mois , grace à notre option de prélèvements mensuels ,<br> ou faire un don ponctuel quand bon vous semble</p>
+                    
+                    <div class="card-footer liguebleu">
+                        <a href="#" class="btn btn-primary"><strong>Faire un Don</strong></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}

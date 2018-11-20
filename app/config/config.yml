@@ -1,0 +1,444 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+    app.path.article_images: uploads/images/articles
+    app.path.article_files: uploads/files/articles
+    app.path.article_videos: uploads/videos/articles
+    app.path.presidence_images: uploads/images/presidence
+    app.path.bureau_images: uploads/images/bureau
+    app.path.aide_sociale: documents
+vich_uploader:
+    db_driver: orm
+    mappings:
+        article_images:
+            uri_prefix: '%app.path.article_images%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/images/articles'
+        article_files:
+            uri_prefix: '%app.path.article_files%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/files/articles'
+        article_videos:
+            uri_prefix: '%app.path.article_files%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/videos/articles'
+        presidence_images:
+            uri_prefix: '%app.path.presidence_images%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/images/presidence'
+        bureau_images:
+            uri_prefix: '%app.path.bureau_images%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/images/bureau'
+# Twig Configuration
+twig:
+    globals:
+        article_images: '%app.path.article_images%'
+        article_files: '%app.path.article_files%'
+        article_videos: '%app.path.article_videos%'
+        presidence_images: '%app.path.presidence_images%'
+        bureau_images: '%app.path.bureau_images%'
+        aide_sociale: '%app.path.aide_sociale%'
+
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes: ['bootstrap_4_layout.html.twig']
+framework:
+    templating:
+        engines: ['twig']
+    translator: ~ #translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     '%database_host%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    auth_mode: login
+    encryption: ssl
+    port: 465
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+    registration:
+        confirmation:
+            enabled: true
+            template:   '@FOSUser/Registration/email.txt.twig'
+            from_email:
+                address: "%mailer_user%"
+                sender_name: "%mailer_user%"
+knp_paginator:
+    page_range: 5                      
+    default_options:
+        page_name: page               
+        sort_field_name: sort         
+        sort_direction_name: direction
+        distinct: true                
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v4_pagination.html.twig'  
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'            
+fos_ck_editor:
+    configs:
+assetic:
+    bundles:  
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~     
+easy_admin_extension:
+    minimum_role: ROLE_ADMIN
+easy_admin:
+    design:
+        form_theme: 'vertical'
+        menu:
+            - { label: 'Accueil Site', route: 'homepage',icon: 'home' }
+            - { label: 'Mailchimp Newsletter', url: 'https://login.mailchimp.com/',icon: 'envelope',target: '_blank' }
+            - { entity: 'Articles',label: 'Articles', default: true }
+            - { entity: 'Comment',label: 'Commentaires', default: true }
+            - { entity: 'Presidence',label: 'Presidence' }
+            - { entity: 'Bureau',label: 'Membres du bureau' }
+            - { entity: 'Administrateur',label: 'Administrateurs' }
+            - { entity: 'Category',label: 'Categories' }
+            - { entity: 'Missions',label: 'Missions' }
+            - { entity: 'Actions',label: 'Actions' }
+            - { entity: 'Contact',label: 'Contacts' }
+            - { label: 'Utilisateurs', entity: 'User', icon: 'user' } 
+    list_actions: ['edit', 'show']
+    site_name: 'Acme Association'
+    entities:
+        Articles: 
+            class: AppBundle\Entity\Articles
+            controller: AppBundle\Controller\ArticlesController
+            role: ROLE_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer un nouvel article'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.article_images%' }
+                    - { property: 'other',label: 'autre fichier', type: 'file', base_path: '%app.path.article_files%' }
+                    - { property: 'video', type: 'file', base_path: '%app.path.article_videos%' }
+                    - { property: 'category',type: 'array'}
+                    - { property: 'user', label: "Créateur d'article", type: 'text'}
+            show:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.article_images%' }
+                    - { property: 'other', type: 'file', base_path: '%app.path.article_files%' }
+                    - { property: 'video', type: 'file', base_path: '%app.path.article_videos%' }
+            edit:
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+                    - { property: 'otherFile', type: 'file' }
+                    - { property: 'videoFile', type: 'file' }
+                    - { property: 'category', type: 'entity', type_options: { class: 'AppBundle\Entity\Category' ,multiple: true,expanded: true} }
+                    - { property: 'user',label: 'Auteur', type: 'entity', type_options: { class: 'AppBundle\Entity\User',expanded: false} }
+            new:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+                    - { property: 'otherFile', type: 'file' }
+                    - { property: 'videoFile', type: 'file' }
+                    - { property: 'category', type: 'entity', type_options: { class: 'AppBundle\Entity\Category' ,multiple: true,expanded: true} }
+                    # - { property: 'user',label: 'Auteur', type: 'entity', type_options: { class: 'AppBundle\Entity\User',expanded: false} }
+                    
+        Category:
+            class: AppBundle\Entity\Category
+            disabled_actions: ['new']
+            role: ROLE_DIRECTION_ADMIN
+            list:
+                title: 'Catégories'
+            edit:
+                fields: 
+                    - { property: 'name',label: 'nom categorie' }
+            show:
+                fields:
+                    - { property: 'name',label: 'nom' }
+        Comment:
+            class: AppBundle\Entity\Comment
+            role: ROLE_DIRECTION_ADMIN
+            list:
+                title: 'Commentaires'
+                fields: 
+                    - { property: 'approuved',label: 'Approuvé'}
+                    - { property: 'user', label: "Créateur d'article", type: 'text'}
+                    - { property: 'createdAt', label: 'Date de création',format: 'd/m/Y - H:i:s' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'article',label: 'titre article'  }
+            new:
+                fields:
+                    - { property: 'approuved',label: 'Approuvé',type: 'checkbox' }
+                    - { property: 'comment_body', label: 'Commentaire',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType'}
+                    - { property: 'user', label: 'Utilisateur',type: 'entity', type_options: { class: 'AppBundle\Entity\User' ,expanded: false} } 
+                    - { property: 'article', type: 'entity', type_options: { class: 'AppBundle\Entity\Articles' } } 
+                    - { property: 'createdAt', label: 'Date de création',format: 'd/m/Y - H:i:s'}
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                        
+            edit:
+                fields:
+                    - { property: 'approuved',label: 'Approuvé',type: 'checkbox' }
+                    - { property: 'comment_body', label: 'Commentaire',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType'}
+                    - { property: 'user', label: 'Utilisateur',type: 'entity', type_options: { class: 'AppBundle\Entity\User' ,expanded: false} } 
+                    - { property: 'article', type: 'entity', type_options: { class: 'AppBundle\Entity\Articles' } } 
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    
+            show:
+                fields:
+                    - { property: 'name',label: 'nom' }            
+                    
+        
+        Actions: 
+            class: AppBundle\Entity\Actions
+            role: ROLE_SECRETARIAT_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer une nouvelle action'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+            edit:
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            new:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            show:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+        Missions: 
+            class: AppBundle\Entity\Missions
+            role: ROLE_SECRETARIAT_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer une nouvelle mission'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+            edit:
+                fields: 
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            new:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            show:
+                fields:
+                    - { property: 'titre',label: 'titre' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+        Bureau: 
+            class: AppBundle\Entity\Bureau
+            role: ROLE_DIRECTION_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer un nouveau membre du bureau'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.bureau_images%' }
+            edit:
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+            new:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+            show:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.bureau_images%' }
+        Administrateur: 
+            class: AppBundle\Entity\Administrateur
+            role: ROLE_DIRECTION_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer un nouvel administrateur'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+            edit:
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            new:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+            show:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+        Presidence: 
+            class: AppBundle\Entity\Presidence
+            role: ROLE_PRESIDENCE_ADMIN
+            list:
+                actions:
+                    - { name: 'new', label: 'Créer un(e) nouvel(le) président(e)'}
+                    - { name: 'edit' }
+                    - { name: 'show' }
+                    - { name: 'delete' }
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.presidence_images%' }
+            edit:
+                fields: 
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+            new:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'FOS\CKEditorBundle\Form\Type\CKEditorType' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'imageFile', type: 'file' }
+            show:
+                fields:
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'description', label: 'Description',type: 'raw' }
+                    - { property: 'updatedAt', label: 'Dernière MAJ',format: 'd/m/Y - H:i:s' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.presidence_images%' }
+        
+        User:
+            class: AppBundle\Entity\User
+            role: ROLE_PRESIDENCE_ADMIN
+            # disabled_actions: ['new']
+            list:
+                title: 'Utilisateur'
+                fields: 
+                    - { property: 'username',label: 'Utilisateur' }
+                    - { property: 'email', type: 'email', label: 'Contact' }
+                    - { property: 'roles', label: 'Roles' }
+                    - { property: 'last_login',type: 'datetime',format: 'd/m/Y - H:i:s', label: 'Dernière connexion' }
+                    - { property: 'enabled', label: 'Email Vérifié' }
+            show:
+                title: 'Utilisateur'
+                fields: 
+                    - { property: 'username',label: 'Utilisateur' }
+                    - { property: 'email', type: 'email', label: 'Contact' }
+                    - { property: 'roles', label: 'Roles' }
+                    - { property: 'last_login',type: 'datetime',format: 'd/m/Y - H:i:s', label: 'Dernière connexion' }
+                    - { property: 'enabled', label: 'Actif' }
+            edit:
+                title: 'Edition Utilisateur'
+                fields: 
+                    - { property: 'username',label: 'Utilisateur' }
+                    - { property: 'email', type: 'email', label: 'Contact' }
+                    - { property: 'roles', type: 'choice', type_options: { expanded: true,multiple: true, choices: { 'admin': 'ROLE_ADMIN', 'secretariat admin': 'ROLE_SECRETARIAT_ADMIN','direction admin':'ROLE_DIRECTION_ADMIN','presidence admin':'ROLE_PRESIDENCE_ADMIN' } } }
+                    - { property: 'last_login',type: 'datetime',format: 'd/m/Y - H:i:s', label: 'Dernière connexion' }
+                    - { property: 'enabled', label: 'Actif' }
+            new:
+                fields: 
+                    - { property: 'username',label: 'Utilisateur' }
+                    - { property: 'email', type: 'email', label: 'Contact' }
+                    - { property: 'plainPassword', type: 'text', type_options: { required: true } }
+                    - { property: 'roles', type: 'choice', type_options: { expanded: true,multiple: true, choices: { 'admin': 'ROLE_ADMIN', 'secretariat admin': 'ROLE_SECRETARIAT_ADMIN','direction admin':'ROLE_DIRECTION_ADMIN','presidence admin':'ROLE_PRESIDENCE_ADMIN' } } }
+                    - { property: 'last_login',type: 'datetime',format: 'd/m/Y - H:i:s', label: 'Dernière connexion' }
+                    - { property: 'enabled', label: 'Actif' }
+            
+        Contact: 
+            class: AppBundle\Entity\Contact
+            role: ROLE_SECRETARIAT_ADMIN
+            disabled_actions: ['new','edit']
+            list:
+                fields: 
+                    - { property: 'civilite',label: 'civilite' }
+                    - { property: 'prenom', label: 'prenom' }
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'telephone', label: 'telephone' }
+                    - { property: 'adresse_mail',label: 'adresse mail' }
+                    - { property: 'sujet', label: 'sujet' }
+            show:
+                fields: 
+                    - { property: 'civilite',label: 'civilite' }
+                    - { property: 'prenom', label: 'prenom' }
+                    - { property: 'nom',label: 'nom' }
+                    - { property: 'telephone', label: 'telephone' }
+                    - { property: 'adresse_mail',label: 'adresse mail' }
+                    - { property: 'sujet', label: 'sujet' }
+                    - { property: 'message', label: 'message' }

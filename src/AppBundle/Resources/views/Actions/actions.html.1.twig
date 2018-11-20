@@ -1,0 +1,161 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row  ">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1 class="text-center">{{title}} </h1>
+            <hr>
+            
+            <div class="list-group">
+                <small class="text-muted mx-auto">* cliquer pour accéder à la description</small>
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item1">
+                    <i class="fa fa-check mr-2"></i>Visites au Centre Hospitalier
+                </a>
+                <div id="item1" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>Des visites hebdomadaires auprès des malades au centre hospitalier de Troyes sont effectuées par une équipe de bénévoles formés.</p>
+                        </strong>
+                    </div>
+                </div>
+
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item2">
+                    <i class="fa fa-check mr-2"></i>Activités Qi-Gong (Gymnastique douce)
+                </a>
+                <div id="item2" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <h5>COURS GRATUITS</h5>
+                            <h6>LE MARDI DE 16H45 À 18H</h6>
+                            <P>
+                                Proposés par le comité de l'aube de la ligue contre le cancer <br>
+                                Dirigés par Mme Ghislaine Grün au complexe sportif Lucien Lacaille <br>
+                                Salle des Arts Populaires <br>
+                                50 rue Victor Hugo - La Rivière de corps <br>
+                                Renseignements au 03 25 73 62 05
+                            </P>
+                        </strong>
+                    </div>
+                </div>
+
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item3">
+                    <i class="fa fa-check mr-2"></i>Soutien psychologique avec des professionnels
+                </a>
+                <div id="item3" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>Prise en charge de 4 séances auprès de psychologues professionnelles , avec lesquelles nous avons une convention , pour les malades et leurs proches. </p>
+                        </strong>
+                    </div>
+                </div>
+
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item4">
+                    <i class="fa fa-check mr-2"></i>Aides financières par le biais de notre commission sociale
+                </a>
+                <div id="item4" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <p>Les aides financières sont des aides ponctuelles qui doivent permettre aux malades  ou à leurs familles de faire 
+                                face aux difficultés financières engendrées par la maladie. Elles ne se substituent pas aux prestations légales, 
+                                et interviennent dans l'attente ou en complément du versement de ces prestations
+                                .</p>
+                            <strong><br>
+                                <p>Tout dossier de demande d'aide sociale doit obligatoirement être rempli par une assistante sociale
+                                </p>
+                            </strong> <br>
+                            <a href="{{asset('documents/Dossier type dde.aide.cd10..pdf')}}" class="btn btn-primary">Accéder au dossier <br> d'aide sociale</a>
+                    </div>
+                </div>
+
+                <!-- <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item5">
+                    <i class="fa fa-check mr-2"></i>Appel aux dons
+                </a>
+                <div id="item5" class="collapse text-center">
+                        <strong><br>
+                            <p>Chaque don au comité départemental permet <br>
+                                UNE REDUCTION FISCALE DE 66% <br>
+                                déductible de votre impôt sur les revenus
+                            </p>
+                        </strong>
+                </div> -->
+
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item6">
+                    <i class="fa fa-check mr-2"></i>Organisation de dépistages
+                </a>
+                <div id="item6" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>Mars Bleu(cancer colorectal)</p>
+                        </strong>
+                        
+                        <strong>
+                            <p>Octobre Rose (Cancer du sein)</p>
+                        </strong>
+                        
+                        <p>
+                            Nous organisons , dans ce cadre , des journées de prévention et d’information sur ce dépistage, en partenariat avec l’ADECA 10 (structure qui s’occupe des tests de dépistages). 
+                        </p>
+                        
+                        <a href="http://www.adeca10.fr/" class="btn btn-primary">Plus d'information sur <br> l'ADECA 10</a>
+                    </div>
+                </div>
+
+                <!-- <a href="" class="lead list-group-item list-group-item-action" data-toggle="collapse" data-target="#item8">
+                    <i class="fa fa-check mr-2"></i> Collecte de fonds
+                </a>
+                <div id="item8" class="collapse text-center">
+                        <strong><br>
+                            <p>Nous collectons des dons lors de chacunes de nos actions</p>
+                            <p>
+                                Nous organisons dans ce cadre des journées de prévention et d’information sur ce dépistage, en partenariat avec l’ADECA 10 (organisme qui s’occupe des tests de dépistages). 
+                            </p>
+                        </strong>
+                </div> -->
+                
+                <a href="" class="lead list-group-item list-group-item-action" data-toggle="collapse" data-target="#item9">
+                    <i class="fa fa-check mr-2"></i> Organisation de Manifestations
+                </a>
+                <div id="item9" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>Grand Loto annuel ( à l'hotel de ville de troyes )</p>
+                            <p>Soirées dansantes , spectacles , galas , et bien plus....Afin de faire connaitre nos actions et récolter des fonds pour la lutte contre le cancer</p>
+                        </strong>
+                    </div>
+                </div>
+
+
+                <!-- <a href="" class="lead list-group-item list-group-item-action" data-toggle="collapse" data-target="#item9">
+                    <i class="fa fa-check mr-2"></i> Organisation de soirées dansantes
+                </a>
+                <div id="item9" class="collapse text-center">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, incidunt nisi? Sint dicta dolores, at, veritatis reprehenderit id tempora iure a perspiciatis hic minima recusandae quasi, placeat doloribus ut delectus?
+                </div>
+
+                <a href="" class="lead list-group-item list-group-item-action" data-toggle="collapse" data-target="#item10">
+                    <i class="fa fa-check mr-2"></i> Organisation de Loto
+                </a>
+                <div id="item10" class="collapse text-center">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae dolore earum eaque aliquid provident! Dolor.
+                </div> -->
+
+                <a href="" class="lead list-group-item list-group-item-action" data-toggle="collapse" data-target="#item11">
+                    <i class="fa fa-check mr-2"></i> Journées de sensibilisation
+                </a>
+                <div id="item11" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>Journée mondiale sans tabac (31 Mai)</p>
+                            <p>Journées de sensibilisation sur les dangers du soleil</p>
+                            <p>Le mois sans tabac en novembre</p>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}

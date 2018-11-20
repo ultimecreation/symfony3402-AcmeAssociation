@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row  ">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1 class="text-center">{{title}} </h1>
+            <hr>
+            
+            <div class="list-group">
+                <small class="text-muted mx-auto">* cliquer pour accéder à la description</small>
+                {% for action in actions %}
+                <a href=""class="lead list-group-item list-group-item-action"data-toggle="collapse" data-target="#item{{action.id}}">
+                    <i class="fa fa-check mr-2"></i>{{action.titre}}
+                </a>
+                <div id="item{{action.id}}" class="collapse text-center px-5">
+                    <div class="py-5">
+                        <strong>
+                            <p>{{action.description|raw}} </p>
+                        </strong>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}

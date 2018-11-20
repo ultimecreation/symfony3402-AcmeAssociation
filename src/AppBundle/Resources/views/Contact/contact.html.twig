@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title}} {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row  ">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1 class="text-center">{{title}} </h1>
+            <hr>
+            {{form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="g-recaptcha " data-sitekey="6Lf_rVYUAAAAAL1F3WT5hvRAbQSTmW0Hh_bg4Lpx"
+            ></div>
+            {{ form_end(form) }}
+            <hr>
+        </div>
+    </div>
+</div>
+{% endblock %}
