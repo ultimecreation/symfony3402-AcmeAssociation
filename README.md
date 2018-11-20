@@ -37,3 +37,5 @@ Fonctionnalités:
 10/ j'ai mis en place un formulaire de contact avec protection ReCaptcha permettant aux utilisateurs non enregistrés d'envoyer un message à l'équipe dirigeante qui recoit une notification par email l'imformant de l'arrivée un nouveau message, l'utilisateur recoit, quant à lui, une notification par email l'informant que son message à été sauvegarder en base de donné
 
 11/ j'ai mis en place un système de souscription à la newsletter
+
+
