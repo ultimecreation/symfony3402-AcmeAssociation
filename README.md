@@ -16,9 +16,11 @@ j'ai utilisé bootstrap 4 pour les assets
 
 Fonctionnalités:
 
-1/ j'ai mis en place une authentification avec encryptage des mots de passe, ainsi qu'une gestion des autorisations en fonction des rôles affectés à chacun utilisateurs (l'admin a accès à toutes les fonctionnalitées d'édition,modification,suppression,et création sur le site, alors qu'un éditeur d'article n'a accès qu'à ses propres articles.De même que la secrétaire ne peut pas affecter des rôles supérieurs à son niveau d'habilitation, idem pour la directrice dont le niveau d'habilitation se situe entre le président et la sécretaire)
+1/ j'ai mis en place une authentification avec encryptage des mots de passe, ainsi qu'une gestion des autorisations en fonction des rôles affectés à chacun utilisateurs (l'admin a accès à toutes les fonctionnalitées d'édition, modification, suppression, et création sur le site, alors qu'un éditeur d'article n'a accès qu'à ses propres articles.De même que la secrétaire ne peut pas accès à certaines zones de l'administration, idem pour la directrice dont le niveau d'habilitation se situe entre le président et la sécretaire)
 
-2/ j'ai mis en place un CRUD complet afin de de créer,éditer,voir,et supprimer les articles 
+2/j'ai mlis en place la création d'utilisateurs avec hashage des mots de passe (uniquement accessible au président de l'association) en parallèle de l'enregistrement normal d'un utilisateur
+
+2/ j'ai mis en place un CRUD complet afin de de créer, éditer, voir, et supprimer les articles 
 
 3/ j'ai lié chaque article à son propriétaire
 
@@ -26,7 +28,9 @@ Fonctionnalités:
 
 5/ j'ai mis en place une pagination pour les articles
 
-6/ j'ai mis en place un systeme d'upload de fichiers(image,pdf,ou videos)
+6/ j'ai mis en place un système de commentaire pouer les membres enregistrés sur le site
+
+6/ j'ai mis en place un système d'upload de fichiers(image,pdf,ou videos accessible dans la partie administration du site)
 
 7/ j'ai en place l'envoi d'email avec swiftmailer
 
